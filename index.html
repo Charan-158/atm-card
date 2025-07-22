@@ -13,74 +13,96 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: linear-gradient(135deg, #98c9a6, #203a43, #92cc97);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 40px 20px;
       min-height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
     }
 
     .card-container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      max-width: 400px;
-      width: 100%;
+      perspective: 1000px;
     }
 
-    .credit-card {
-      background: linear-gradient(135deg, #3a3a98, #4e4376);
-      color: white;
-      padding: 20px;
-      border-radius: 16px;
-      margin-bottom: 20px;
-      position: relative;
+    .card {
+      width: 360px;
       height: 220px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      backface-visibility: hidden;
+      background: linear-gradient(135deg, #1e3c72, #2a0845);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      color: #fff;
     }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
+    .card-front {
+      z-index: 2;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      justify-content: center;
       align-items: center;
     }
 
     .chip {
       width: 50px;
       height: 35px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/EMV_chip.svg/120px-EMV_chip.svg.png') no-repeat center;
-      background-size: contain;
+      background: gold;
+      border-radius: 6px;
     }
 
     .logo {
-      width: 60px;
-      height: 40px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/512px-Visa.svg.png') no-repeat center;
-      background-size: contain;
+      width: 70px;
+      align-self: flex-end;
     }
 
     .card-number {
       font-size: 1.4em;
-      letter-spacing: 3px;
-      text-align: center;
-      margin: 10px 0;
+      letter-spacing: 2px;
     }
 
-    .card-details {
-      font-size: 0.8em;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 4px;
+    .card-info {
+      font-size: 0.9em;
     }
 
-    .card-details small {
-      display: block;
-      color: #ddd;
+    .card-label {
+      font-size: 0.75em;
+      opacity: 0.8;
+    }
+
+    .form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 360px;
+      width: 100%;
+      color: #000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
     .form-group {
@@ -93,7 +115,16 @@
       padding: 10px;
       font-size: 14px;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 6px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form-row > * {
+      flex: 1;
     }
 
     .submit-button {
@@ -110,116 +141,131 @@
     .submit-button:hover {
       background: #274478;
     }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .form-row > * {
-      flex: 1;
-    }
   </style>
 </head>
 <body>
 
+<div class="container">
   <div class="card-container">
-    <!-- CREDIT CARD -->
-    <div class="credit-card">
-      <div class="card-top">
+    <div class="card" id="credit-card">
+      <div class="card-side card-front">
         <div class="chip"></div>
-        <div class="logo"></div>
-      </div>
-      <div class="card-number" id="display-card-number">**** **** **** ****</div>
-      <div class="card-details">
-        <div>
-          <small>Card Holder</small>
+        <div class="card-number" id="display-card-number">**** **** **** ****</div>
+        <div class="card-info">
+          <div class="card-label">Card Holder</div>
           <div id="display-card-holder">NAME</div>
         </div>
-        <div>
-          <small>Expires</small>
+        <div class="card-info">
+          <div class="card-label">Expires</div>
           <div id="display-expiry">MM/YY</div>
         </div>
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
+      </div>
+      <div class="card-side card-back">
         <div>
-          <small>CVV</small>
+          <div class="card-label">CVV</div>
           <div id="display-cvv">***</div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- FORM -->
+  <div class="form">
     <div class="form-group">
       <label>Card Number</label>
-      <input type="text" id="card-number" maxlength="19" placeholder="5555 5555 5555 5555" />
+      <input type="text" id="card-number" maxlength="19" placeholder="1234 5678 9012 3456"/>
     </div>
 
     <div class="form-group">
       <label>Card Holder</label>
-      <input type="text" id="card-holder" placeholder="Name on Card" />
+      <input type="text" id="card-holder" placeholder="Full Name"/>
     </div>
 
     <div class="form-group">
       <label>Expiration Date</label>
       <div class="form-row">
         <select id="exp-month">
-          <option value="">Month</option>
-          <option value="01">01</option><option value="02">02</option>
-          <option value="03">03</option><option value="04">04</option>
-          <option value="05">05</option><option value="06">06</option>
-          <option value="07">07</option><option value="08">08</option>
-          <option value="09">09</option><option value="10">10</option>
-          <option value="11">11</option><option value="12">12</option>
+          <option value="">MM</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
         </select>
-        <input type="text" id="exp-year" placeholder="YY or YYYY" maxlength="4" />
-        <input type="text" id="cvv" placeholder="CVV" maxlength="4" />
+        <input type="text" id="exp-year" placeholder="YYYY" maxlength="4"/>
       </div>
+    </div>
+
+    <div class="form-group">
+      <label>CVV</label>
+      <input type="text" id="cvv" maxlength="4" placeholder="123"/>
     </div>
 
     <button class="submit-button">Submit</button>
   </div>
+</div>
 
-  <script>
-    const numberInput = document.getElementById("card-number");
-    const holderInput = document.getElementById("card-holder");
-    const monthInput = document.getElementById("exp-month");
-    const yearInput = document.getElementById("exp-year");
-    const cvvInput = document.getElementById("cvv");
+<script>
+  const card = document.getElementById('credit-card');
+  const numberInput = document.getElementById("card-number");
+  const holderInput = document.getElementById("card-holder");
+  const monthInput = document.getElementById("exp-month");
+  const yearInput = document.getElementById("exp-year");
+  const cvvInput = document.getElementById("cvv");
 
-    const numberDisplay = document.getElementById("display-card-number");
-    const holderDisplay = document.getElementById("display-card-holder");
-    const expiryDisplay = document.getElementById("display-expiry");
-    const cvvDisplay = document.getElementById("display-cvv");
+  const numberDisplay = document.getElementById("display-card-number");
+  const holderDisplay = document.getElementById("display-card-holder");
+  const expiryDisplay = document.getElementById("display-expiry");
+  const cvvDisplay = document.getElementById("display-cvv");
 
-    numberInput.addEventListener("input", () => {
-      let formatted = numberInput.value
-        .replace(/\D/g, "")
-        .replace(/(.{4})/g, "$1 ")
-        .trim()
-        .substring(0, 19);
-      numberInput.value = formatted;
-      numberDisplay.textContent = formatted.padEnd(19, "*");
-    });
+  numberInput.addEventListener("input", () => {
+    let raw = numberInput.value.replace(/\D/g, "").slice(0, 16);
+    let masked = "";
 
-    holderInput.addEventListener("input", () => {
-      holderDisplay.textContent = holderInput.value || "NAME";
-    });
-
-    function updateExpiry() {
-      const m = monthInput.value || "MM";
-      let y = yearInput.value.trim();
-      if (y.length === 4) y = y.slice(2);
-      expiryDisplay.textContent = `${m}/${y || "YY"}`;
+    for (let i = 0; i < raw.length; i++) {
+      if (i < 4 || i >= raw.length - 4) {
+        masked += raw[i];
+      } else {
+        masked += "*";
+      }
+      if ((i + 1) % 4 === 0 && i !== raw.length - 1) masked += " ";
     }
 
-    monthInput.addEventListener("change", updateExpiry);
-    yearInput.addEventListener("input", updateExpiry);
+    let formatted = raw.replace(/(.{4})/g, "$1 ").trim();
+    numberInput.value = formatted;
+    numberDisplay.textContent = masked.padEnd(19, "*");
+  });
 
-    cvvInput.addEventListener("input", () => {
-      let val = cvvInput.value.replace(/\D/g, "").substring(0, 4);
-      cvvInput.value = val;
-      cvvDisplay.textContent = val || "***";
-    });
-  </script>
+  holderInput.addEventListener("input", () => {
+    holderDisplay.textContent = holderInput.value || "NAME";
+  });
+
+  function updateExpiry() {
+    const m = monthInput.value || "MM";
+    let y = yearInput.value.trim();
+    if (y.length === 4) y = y.slice(2);
+    expiryDisplay.textContent = `${m}/${y || "YY"}`;
+  }
+
+  monthInput.addEventListener("change", updateExpiry);
+  yearInput.addEventListener("input", updateExpiry);
+
+  cvvInput.addEventListener("focus", () => card.classList.add("flipped"));
+  cvvInput.addEventListener("blur", () => card.classList.remove("flipped"));
+
+  cvvInput.addEventListener("input", () => {
+    let val = cvvInput.value.replace(/\D/g, "").substring(0, 4);
+    cvvInput.value = val;
+    cvvDisplay.textContent = val || "***";
+  });
+</script>
 
 </body>
 </html>
