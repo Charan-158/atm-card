@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Credit Card with Background</title>
+  <title>Credit Card UI</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,7 +13,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,37 +25,62 @@
       background: #fff;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       max-width: 400px;
       width: 100%;
     }
 
     .credit-card {
-      background: url('https://alpixn.com/assets/logo-a3PiV9Ve.jpeg') center center / contain no-repeat;
+      background: linear-gradient(135deg, #3a3a98, #4e4376);
       color: white;
       padding: 20px;
       border-radius: 16px;
       margin-bottom: 20px;
       position: relative;
-      height: 200px;
+      height: 220px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      background-color: rgba(0, 0, 0, 0.6);
-      background-blend-mode: overlay;
+      justify-content: space-between;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     }
 
-    .credit-card h2 {
-      font-size: 20px;
-      letter-spacing: 2px;
-      margin: 0 0 8px;
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .credit-card small {
+    .chip {
+      width: 50px;
+      height: 35px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/EMV_chip.svg/120px-EMV_chip.svg.png') no-repeat center;
+      background-size: contain;
+    }
+
+    .logo {
+      width: 60px;
+      height: 40px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/512px-Visa.svg.png') no-repeat center;
+      background-size: contain;
+    }
+
+    .card-number {
+      font-size: 1.4em;
+      letter-spacing: 3px;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .card-details {
+      font-size: 0.8em;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+
+    .card-details small {
       display: block;
-      font-size: 12px;
-      color: #eee;
-      margin-bottom: 2px;
+      color: #ddd;
     }
 
     .form-group {
@@ -101,10 +126,25 @@
   <div class="card-container">
     <!-- CREDIT CARD -->
     <div class="credit-card">
-      <h2 id="display-card-number">**** **** **** ****</h2>
-      <small>Card Holder: <span id="display-card-holder">NAME</span></small>
-      <small>Expires: <span id="display-expiry">MM/YY</span></small>
-      <small>CVV: <span id="display-cvv">***</span></small>
+      <div class="card-top">
+        <div class="chip"></div>
+        <div class="logo"></div>
+      </div>
+      <div class="card-number" id="display-card-number">**** **** **** ****</div>
+      <div class="card-details">
+        <div>
+          <small>Card Holder</small>
+          <div id="display-card-holder">NAME</div>
+        </div>
+        <div>
+          <small>Expires</small>
+          <div id="display-expiry">MM/YY</div>
+        </div>
+        <div>
+          <small>CVV</small>
+          <div id="display-cvv">***</div>
+        </div>
+      </div>
     </div>
 
     <!-- FORM -->
